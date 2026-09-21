@@ -96,12 +96,14 @@ Membuat chatbot yang "mengingat" percakapan:
 
 ```text
 ai-applied-learning/
+├── .env
+├── .gitignore
 ├── README.md
 ├── requirements.txt
 ├── docs/
 │   └── prompt_templates.md
-├── prompts/
 ├── schemas/
+│   ├── __init__.py
 │   ├── contact.py
 │   └── summary.py
 ├── src/
@@ -113,8 +115,10 @@ ai-applied-learning/
 │   ├── api_wrapper.py
 │   ├── hello.py
 │   ├── chat/
+│   │   ├── __init__.py
 │   │   └── conversation.py
 │   ├── llm/
+│   │   ├── __init__.py
 │   │   ├── base.py
 │   │   ├── deepseek_provider.py
 │   │   ├── factory.py
