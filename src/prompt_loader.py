@@ -46,10 +46,26 @@ class PromptLoader:
         Returns:
             Respons teks dari LLM.
         """
+        system_prompt, user_prompt = self.build_prompt(template_name, **kwargs)
+        return self._call_llm(system_prompt, user_prompt)
+
+    def build_prompt(self, template_name: str, **kwargs: Any) -> tuple[str, str]:
+        """Load → render → pisahkan menjadi (system_prompt, user_prompt).
+
+        Metode ini MURNI menyiapkan prompt dan TIDAK memanggil LLM.
+        Dengan begitu Prompt Loader terpisah dari Provider, dan hasilnya
+        dapat dipakai ulang oleh pipeline structured output.
+
+        Args:
+            template_name: Nama file template (tanpa .md).
+            **kwargs: Nilai untuk placeholder.
+
+        Returns:
+            Tuple (system_prompt, user_prompt).
+        """
         template = self.load_template(template_name)
         rendered = self.render(template, **kwargs)
-        system_prompt, user_prompt = self.parse_sections(rendered)
-        return self._call_llm(system_prompt, user_prompt)
+        return self.parse_sections(rendered)
 
     def load_template(self, name: str) -> str:
         """Baca file template dari folder prompts/.
