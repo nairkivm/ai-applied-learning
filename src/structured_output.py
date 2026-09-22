@@ -23,6 +23,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from llm.factory import create_provider
 from prompt_loader import PromptLoader
+from schemas.product import Product
 from schemas.summary import Summary
 from utils.parser import parse_response
 
@@ -85,6 +86,12 @@ def main() -> None:
     parsed = parse_response(sample, Summary)
     print("Tipe objek:", type(parsed).__name__)
     print(parsed.model_dump_json(indent=2))
+
+    print("\n=== Demo Parser Product (tanpa LLM) ===")
+    product_sample = '{"name": "Meja Kayu", "category": "Furniture", "price": 1500000, "description": "Meja kerja dari kayu jati."}'
+    product = parse_response(product_sample, Product)
+    print("Tipe objek:", type(product).__name__)
+    print(product.model_dump_json(indent=2))
 
     print("\n=== Demo Pipeline Penuh (Prompt → Provider → Parser) ===")
     try:
